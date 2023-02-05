@@ -1,27 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Switch, Route} from `react-router-dom`
-import Navbar from './componentes/navegacion/Navbar'
-import Inicio from './componentes/paginas/Inicio'
-import Pokemon from './componentes/paginas/Pokemon'
-import Items from './componentes/paginas/Items'
+import { Route, Routes } from "react-router-dom";
+import Cart from "./components/Cart/Cart";
+import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
+import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
+import CartState from "./context/CartState";
+import About from "./pages/About/About";
+import Checkout from "./pages/Checkout/Checkout";
+import Home from "./pages/Home/Home";
 
 function App() {
-
   return (
-    <div className="App">
-      <Router>
-        <Navbar/>
-        <Switch>
-          <Route path='/' exact component={Inicio}/>
-          <Route path='/pokemon' component={Pokemon}/>
-          <Route path='/items' components={Items}/>
-        </Switch>
-      </Router>
+    <>
+      <div className="app-container">
+        <CartState>
+          <Cart />
+          <Routes>
+            <Route path="/" element={<Home />} />
 
+            <Route path="/shop" element={<ItemListContainer />} />
 
+            <Route
+              path="/shop/category/:category"
+              element={<ItemListContainer />}
+            />
 
-    </div>
+            <Route path="/item/detail/:id" element={<ItemDetailContainer />} />
+
+            <Route path="/checkout" element={<Checkout />} />
+
+            <Route path="/about" element={<About />} />
+
+            <Route
+              path="*"
+              element={<h1>Error 404 - Pagina no encontrada.</h1>}
+            />
+          </Routes>
+        </CartState>
+      </div>
+    </>
   );
 }
 
